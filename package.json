@@ -9,24 +9,32 @@
     "prepare": "tsc",
     "build": "tsc",
     "pretest": "tsc",
-    "lint": "tsc && eslint --cache .",
-    "test": "jest"
+    "lint": "eslint --cache --ext .ts .",
+    "test": "jest",
+    "clean": "git clean -d -f -x src __tests__"
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "mock-precompile"
+      "mock-precompile",
+      ".*\\.ts"
     ]
   },
+  "main": "src/node-main.js",
+  "exports": {
+    ".": {
+      "browser": "./src/plugin.js",
+      "default": "./src/node-main.js"
+    }
+  },
   "files": [
-    "index.js",
     "src/**/*.js",
-    "dist/**/*.js"
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
   ],
   "dependencies": {
-    "babel-plugin-ember-modules-api-polyfill": "^3.5.0",
+    "babel-import-util": "^0.2.0",
     "line-column": "^1.0.2",
     "magic-string": "^0.25.7",
-    "parse-static-imports": "^1.1.0",
     "string.prototype.matchall": "^4.0.5"
   },
   "devDependencies": {
@@ -35,7 +43,9 @@
     "@babel/plugin-transform-modules-amd": "^7.14.5",
     "@babel/plugin-transform-template-literals": "^7.14.5",
     "@babel/plugin-transform-unicode-escapes": "^7.14.5",
-    "@glimmer/syntax": "^0.77.6",
+    "@babel/traverse": "^7.14.5",
+    "@types/babel__traverse": "^7.11.1",
+    "@types/jest": "^26.0.23",
     "@types/line-column": "^1.0.0",
     "@types/string.prototype.matchall": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
